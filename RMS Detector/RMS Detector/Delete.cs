@@ -1,57 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.ComponentModel;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RMS_Detector
 {
     public partial class Delete : Form
     {
+        private string result = "";
+
         public Delete()
         {
             InitializeComponent();
-            String result = ":(";
+            FindProcess();
+        }
 
-            Process[] processlist = Process.GetProcessesByName("rfusclient");
-            foreach (Process p in processlist)
-            {
+        private void FindProcess()
+        {
+            var processlist = Process.GetProcessesByName("rfusclient");
+            foreach (var p in processlist)
                 try
                 {
+                    DeleteFile(p);
                     result = p.MainModule.FileName;
-                    break;
+                    label1.Text = $"{result} - это путь к вирусу. Удалить?";
+                    return;
                 }
                 catch (Win32Exception)
                 {
                 }
-            }
-            label1.Text = result;
-            label1.Text += " - это путь к вирусу. Удалить?";
 
+            MessageBox.Show("Not found");
+        }
+
+        private void DeleteFile(Process badProcess)
+        {
+            string s = badProcess.MainModule.FileName;
+            badProcess.Kill();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string name = "rutserv";
-            System.Diagnostics.Process[] etc = System.Diagnostics.Process.GetProcesses();
-            foreach (System.Diagnostics.Process anti in etc)
-                if (anti.ProcessName.ToLower().Contains(name.ToLower())) anti.Kill();
-            name = "rfusclient";
-            foreach (System.Diagnostics.Process anti in etc)
-                if (anti.ProcessName.ToLower().Contains(name.ToLower())) anti.Kill();
-            name = "RMS";
-            foreach (System.Diagnostics.Process anti in etc)
-                if (anti.ProcessName.ToLower().Contains(name.ToLower())) anti.Kill();
-            System.IO.File.Delete(result);
+            var etc = Process.GetProcesses();
+
+            foreach (var anti in etc)
+            {
+                string name1 = "rutserv";
+                string name2 = "rfusclient";
+                string name3 = "RMS";
+                string processName = anti.ProcessName.ToLower();
+
+                if (processName.Contains(name1) || processName.Contains(name2)
+                    || processName.Contains(name3))
+                {
+                    anti.Kill();
+                }
+            }
+            File.Delete(result);
         }
     }
-
-       
-    }
-
+}
