@@ -17,6 +17,14 @@ namespace RMS_Detector
             InitializeComponent();
         }
 
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Delete del = new Delete();
+            del.Show();
+        }
     }
 }
