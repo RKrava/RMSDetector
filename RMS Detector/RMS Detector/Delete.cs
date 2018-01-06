@@ -23,21 +23,19 @@ namespace RMS_Detector
                 try
                 {
                     DeleteFile(p);
-                    result = p.MainModule.FileName;
-                    label1.Text = $"{result} - это путь к вирусу. Удалить?";
                     return;
                 }
                 catch (Win32Exception)
                 {
                 }
 
-            MessageBox.Show("Not found");
         }
 
         private void DeleteFile(Process badProcess)
         {
             string s = badProcess.MainModule.FileName;
             badProcess.Kill();
+            MessageBox.Show("Not found");//Вот здесь 
         }
 
         private void button1_Click(object sender, EventArgs e)
