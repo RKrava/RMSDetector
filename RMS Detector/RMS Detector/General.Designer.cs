@@ -60,6 +60,7 @@
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Click += new System.EventHandler(this.notifyIcon1_Click);
             // 
             // timer1
             // 
@@ -74,9 +75,12 @@
             this.ClientSize = new System.Drawing.Size(457, 309);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "General";
             this.Text = "RMS DETECTOR";
+            this.Deactivate += new System.EventHandler(this.General_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.General_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

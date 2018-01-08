@@ -75,6 +75,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Question";
             this.Text = "RMS DETECTOR";
+            this.Load += new System.EventHandler(this.Question_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
